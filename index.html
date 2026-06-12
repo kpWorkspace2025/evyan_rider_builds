@@ -275,7 +275,6 @@ function loadApp() {
     renderBuilds();
 }
 
-/* 🚀 GITHUB RELEASES AUTO LIST */
 async function renderBuilds() {
     showLoader();
 
@@ -304,7 +303,7 @@ async function renderBuilds() {
             list.innerHTML += `
                 <div class="card">
                     <div>
-                        Version ${b.version}
+                        ${b.version}
                         ${i === 0 ? '<span class="latest">(Latest)</span>' : ''}
                     </div>
                     <a class="btn" href="${b.link}" target="_blank">
