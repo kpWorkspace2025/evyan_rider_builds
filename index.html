@@ -23,7 +23,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0,0,0,0.85);
             display: none;
             justify-content: center;
             align-items: center;
@@ -191,7 +191,7 @@
     <div class="login-card">
 
         <img src="https://play-lh.googleusercontent.com/FdogNeQVvWNcvf0VCQAyMTYV7J7XR0IWWQlJyycEvFXlcprKiUGlmCuhnBUHp9O51DcBnnTKFQiOe7ocb5oDiw=w480-h960-rw"
-            class="login-logo">
+             class="login-logo">
 
         <div class="login-heading">Evyan Rider Builds</div>
         <div class="login-subheading">UAT Access Portal</div>
@@ -215,7 +215,7 @@
         <div class="header">
             <div class="header-left">
                 <img src="https://play-lh.googleusercontent.com/FdogNeQVvWNcvf0VCQAyMTYV7J7XR0IWWQlJyycEvFXlcprKiUGlmCuhnBUHp9O51DcBnnTKFQiOe7ocb5oDiw=w480-h960-rw"
-                    class="header-logo">
+                     class="header-logo">
                 <div class="title">Evyan Rider Builds</div>
             </div>
 
@@ -266,50 +266,50 @@ function loadApp() {
     renderBuilds();
 }
 
-/* FIXED APK DOWNLOAD */
-async function downloadApk(url, name) {
+/* FAST & RELIABLE DOWNLOAD */
+function downloadApk(url, name) {
     try {
-        showLoader();
+        const downloadUrl = decodeURIComponent(url);
+        const fileName = decodeURIComponent(name || "app.apk");
 
-        url = decodeURIComponent(url);
-        name = decodeURIComponent(name);
-
-        const res = await fetch(url);
-        const blob = await res.blob();
-
-        const blobUrl = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
-
-        a.href = blobUrl;
-        a.download = name || "app.apk";
+        a.href = downloadUrl;
+        a.download = fileName;
+        a.target = "_blank";
+        a.rel = "noopener";
 
         document.body.appendChild(a);
         a.click();
-
         a.remove();
-        window.URL.revokeObjectURL(blobUrl);
 
     } catch (err) {
         console.error(err);
         alert("Download failed");
-    } finally {
-        hideLoader();
     }
 }
 
-/* RENDER BUILDS (FIXED) */
+/* FETCH BUILDS */
 async function renderBuilds() {
     showLoader();
 
     try {
-        const res = await fetch("https://api.github.com/repos/kpWorkspace2025/evyan_rider_builds/releases");
+        const res = await fetch(
+            "https://api.github.com/repos/kpWorkspace2025/evyan_rider_builds/releases"
+        );
+
         const data = await res.json();
 
         let builds = data
-            .map(r => ({
-                version: r.tag_name,
-                link: r.assets?.find(a => a.browser_download_url)?.browser_download_url || ""
-            }))
+            .map(r => {
+                const asset = r.assets?.find(a =>
+                    a.browser_download_url && a.name?.endsWith(".apk")
+                );
+
+                return {
+                    version: r.tag_name,
+                    link: asset?.browser_download_url || ""
+                };
+            })
             .filter(b => b.link);
 
         builds.sort((a, b) =>
