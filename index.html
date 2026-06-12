@@ -1,334 +1,372 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Evyan Rider Builds</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evyan Rider Builds</title>
 
-<style>
-* {
-    box-sizing: border-box;
-}
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-body {
-    margin: 0;
-    font-family: "Segoe UI", Arial, sans-serif;
-    background: #000;
-    overflow-x: hidden;
-}
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #000;
+            overflow-x: hidden;
+        }
 
-/* LOADER */
-.loader-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.85);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-}
+        /* LOADER */
+        .loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
 
-.loader {
-    width: 45px;
-    height: 45px;
-    border: 5px solid #ccc;
-    border-top: 5px solid #1a73e8;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
+        .loader {
+            width: 45px;
+            height: 45px;
+            border: 5px solid #ccc;
+            border-top: 5px solid #1a73e8;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
 
-/* LOGIN */
-.login-container {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #000;
-    padding: 12px;
-}
+            100% {
+                transform: rotate(360deg);
+            }
+        }
 
-.login-card {
-    background: #fff;
-    padding: 50px 60px;
-    width: 380px;
-    border-radius: 16px;
-    text-align: center;
-}
+        /* LOGIN */
+        .login-container {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+            padding: 12px;
+        }
 
-.login-logo {
-    width: 85px;
-    height: 85px;
-    border-radius: 18px;
-    margin-bottom: 20px;
-}
+        .login-card {
+            background: #fff;
+            padding: 50px 60px;
+            width: 380px;
+            border-radius: 16px;
+            text-align: center;
+        }
 
-.login-heading {
-    font-size: 22px;
-    font-weight: 600;
-}
+        .login-logo {
+            width: 85px;
+            height: 85px;
+            border-radius: 18px;
+            margin-bottom: 20px;
+        }
 
-.login-subheading {
-    font-size: 13px;
-    color: #6b7280;
-    margin-bottom: 28px;
-}
+        .login-heading {
+            font-size: 22px;
+            font-weight: 600;
+        }
 
-.input-group {
-    margin-bottom: 15px;
-}
+        .login-subheading {
+            font-size: 13px;
+            color: #6b7280;
+            margin-bottom: 28px;
+        }
 
-.input-group input {
-    width: 100%;
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #d1d5db;
-    font-size: 14px;
-}
+        .input-group {
+            margin-bottom: 15px;
+        }
 
-.login-btn {
-    width: 100%;
-    padding: 12px;
-    background: #1a73e8;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    font-size: 15px;
-    cursor: pointer;
-}
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            font-size: 14px;
+        }
 
-/* MAIN */
-.container {
-    max-width: 850px;
-    width: 100%;
-    margin: 40px auto;
-    background: #fff;
-    padding: 25px;
-    border-radius: 14px;
-}
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: #1a73e8;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            cursor: pointer;
+        }
 
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+        /* MAIN */
+        .container {
+            max-width: 850px;
+            width: 100%;
+            margin: 40px auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 14px;
+        }
 
-.header-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-.header-logo {
-    width: 50px;
-    border-radius: 12px;
-}
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-.title {
-    font-size: 20px;
-    font-weight: 600;
-}
+        .header-logo {
+            width: 50px;
+            border-radius: 12px;
+        }
 
-.logout {
-    color: red;
-    cursor: pointer;
-    font-size: 13px;
-}
+        .title {
+            font-size: 20px;
+            font-weight: 600;
+        }
 
-.card {
-    display: flex;
-    justify-content: space-between;
-    padding: 12px;
-    margin-top: 10px;
-    border: 1px solid #eee;
-    border-radius: 8px;
-    align-items: center;
-}
+        .logout {
+            color: red;
+            cursor: pointer;
+            font-size: 13px;
+        }
 
-.latest {
-    color: green;
-    font-weight: bold;
-    margin-left: 8px;
-}
+        .card {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px;
+            margin-top: 10px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            align-items: center;
+        }
 
-.btn {
-    background: #1a73e8;
-    color: #fff;
-    padding: 6px 12px;
-    text-decoration: none;
-    border-radius: 6px;
-}
+        .latest {
+            color: green;
+            font-weight: bold;
+            margin-left: 8px;
+        }
 
-/* MOBILE */
-@media (max-width: 600px) {
-    body {
-        padding: 12px;
-    }
+        .btn {
+            background: #1a73e8;
+            color: #fff;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
 
-    .container {
-        width: calc(100% - 24px);
-        margin: 20px auto;
-        padding: 20px;
-    }
+        /* MOBILE */
+        @media (max-width: 600px) {
+            body {
+                padding: 12px;
+            }
 
-    .login-card {
-        width: 100%;
-        max-width: 380px;
-        padding: 35px 25px;
-    }
-}
-</style>
+            .container {
+                width: calc(100% - 24px);
+                margin: 20px auto;
+                padding: 20px;
+            }
+
+            .login-card {
+                width: 100%;
+                max-width: 380px;
+                padding: 35px 25px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<!-- LOADER -->
-<div id="loader" class="loader-overlay">
-    <div class="loader"></div>
-</div>
-
-<!-- LOGIN -->
-<div id="login" class="login-container">
-    <div class="login-card">
-
-        <img src="https://play-lh.googleusercontent.com/FdogNeQVvWNcvf0VCQAyMTYV7J7XR0IWWQlJyycEvFXlcprKiUGlmCuhnBUHp9O51DcBnnTKFQiOe7ocb5oDiw=w480-h960-rw"
-             class="login-logo">
-
-        <div class="login-heading">Evyan Rider Builds</div>
-        <div class="login-subheading">UAT Access Portal</div>
-
-        <div class="input-group">
-            <input id="username" type="text" placeholder="Username">
-        </div>
-
-        <div class="input-group">
-            <input id="password" type="password" placeholder="Password">
-        </div>
-
-        <button class="login-btn" onclick="login()">Login</button>
-
+    <!-- LOADER -->
+    <div id="loader" class="loader-overlay">
+        <div class="loader"></div>
     </div>
-</div>
 
-<!-- MAIN -->
-<div id="main" style="display:none;">
-    <div class="container">
+    <!-- LOGIN -->
+    <div id="login" class="login-container">
+        <div class="login-card">
 
-        <div class="header">
-            <div class="header-left">
-                <img src="https://play-lh.googleusercontent.com/FdogNeQVvWNcvf0VCQAyMTYV7J7XR0IWWQlJyycEvFXlcprKiUGlmCuhnBUHp9O51DcBnnTKFQiOe7ocb5oDiw=w480-h960-rw"
-                     class="header-logo">
-                <div class="title">Evyan Rider Builds</div>
+            <img src="https://play-lh.googleusercontent.com/FdogNeQVvWNcvf0VCQAyMTYV7J7XR0IWWQlJyycEvFXlcprKiUGlmCuhnBUHp9O51DcBnnTKFQiOe7ocb5oDiw=w480-h960-rw"
+                class="login-logo">
+
+            <div class="login-heading">Evyan Rider Builds</div>
+            <div class="login-subheading">UAT Access Portal</div>
+
+            <div class="input-group">
+                <input id="username" type="text" placeholder="Username">
             </div>
 
-            <div class="logout" onclick="logout()">Logout</div>
+            <div class="input-group">
+                <input id="password" type="password" placeholder="Password">
+            </div>
+
+            <button class="login-btn" onclick="login()">Login</button>
+
         </div>
-
-        <div id="buildList"></div>
-
     </div>
-</div>
 
-<script>
-const USER = { u: "evyan", p: "sreyah@25" };
+    <!-- MAIN -->
+    <div id="main" style="display:none;">
+        <div class="container">
 
-function showLoader() {
-    document.getElementById("loader").style.display = "flex";
-}
+            <div class="header">
+                <div class="header-left">
+                    <img src="https://play-lh.googleusercontent.com/FdogNeQVvWNcvf0VCQAyMTYV7J7XR0IWWQlJyycEvFXlcprKiUGlmCuhnBUHp9O51DcBnnTKFQiOe7ocb5oDiw=w480-h960-rw"
+                        class="header-logo">
+                    <div class="title">Evyan Rider Builds</div>
+                </div>
 
-function hideLoader() {
-    document.getElementById("loader").style.display = "none";
-}
+                <div class="logout" onclick="logout()">Logout</div>
+            </div>
 
-/* LOGIN */
-function login() {
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
+            <div id="buildList"></div>
 
-    if (username === USER.u && password === USER.p) {
-        showLoader();
+        </div>
+    </div>
 
-        setTimeout(() => {
-            sessionStorage.setItem("auth", "true");
-            loadApp();
-        }, 800);
-    } else {
-        alert("Invalid login");
-    }
-}
+    <script>
+        const USER = { u: "evyan", p: "sreyah@25" };
 
-function logout() {
-    sessionStorage.clear();
-    location.reload();
-}
+        function showLoader() {
+            document.getElementById("loader").style.display = "flex";
+        }
 
-function loadApp() {
-    document.getElementById("login").style.display = "none";
-    document.getElementById("main").style.display = "block";
-    renderBuilds();
-}
+        function hideLoader() {
+            document.getElementById("loader").style.display = "none";
+        }
 
-/* 🚀 GITHUB RELEASES AUTO LIST */
-async function renderBuilds() {
-    showLoader();
+        /* LOGIN */
+        function login() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
 
-    try {
-        const res = await fetch(
-            "https://api.github.com/repos/kpWorkspace2025/evyan_rider_builds/releases"
-        );
+            if (username === USER.u && password === USER.p) {
+                showLoader();
 
-        const data = await res.json();
+                setTimeout(() => {
+                    sessionStorage.setItem("auth", "true");
+                    loadApp();
+                }, 800);
+            } else {
+                alert("Invalid login");
+            }
+        }
 
-        let builds = data
-            .map(r => ({
-                version: r.tag_name,
-                link: r.assets?.[0]?.browser_download_url || ""
-            }))
-            .filter(b => b.link);
+        function logout() {
+            sessionStorage.clear();
+            location.reload();
+        }
 
-        builds.sort((a, b) =>
-            b.version.localeCompare(a.version, undefined, { numeric: true })
-        );
+        function loadApp() {
+            document.getElementById("login").style.display = "none";
+            document.getElementById("main").style.display = "block";
+            renderBuilds();
+        }
 
-        const list = document.getElementById("buildList");
-        list.innerHTML = "";
+        /* ✅ DIRECT APK DOWNLOAD (FIXED) */
+        async function downloadApk(url, name) {
+            try {
+                showLoader();
 
-        builds.forEach((b, i) => {
-            list.innerHTML += `
+                const res = await fetch(url);
+                const blob = await res.blob();
+
+                const blobUrl = window.URL.createObjectURL(blob);
+                const a = document.createElement("a");
+
+                a.href = blobUrl;
+                a.download = name || "app.apk";
+
+                document.body.appendChild(a);
+                a.click();
+
+                a.remove();
+                window.URL.revokeObjectURL(blobUrl);
+
+            } catch (err) {
+                console.error(err);
+                alert("Download failed");
+            } finally {
+                hideLoader();
+            }
+        }
+
+        /* RENDER BUILDS */
+        async function renderBuilds() {
+            showLoader();
+
+            try {
+                const res = await fetch(
+                    "https://api.github.com/repos/kpWorkspace2025/evyan_rider_builds/releases"
+                );
+
+                const data = await res.json();
+
+                let builds = data
+                    .map(r => ({
+                        version: r.tag_name,
+                        link: r.assets?.[0]?.browser_download_url || ""
+                    }))
+                    .filter(b => b.link);
+
+                builds.sort((a, b) =>
+                    b.version.localeCompare(a.version, undefined, { numeric: true })
+                );
+
+                const list = document.getElementById("buildList");
+                list.innerHTML = "";
+
+                builds.forEach((b, i) => {
+                    list.innerHTML += `
                 <div class="card">
                     <div>
-                        Version ${b.version}
+                        ${b.version}
                         ${i === 0 ? '<span class="latest">(Latest)</span>' : ''}
                     </div>
-                    <a class="btn" href="${b.link}" target="_blank">
+
+                    <button class="btn"
+                        onclick="downloadApk('${b.link}', '${b.version}.apk')">
                         Download
-                    </a>
+                    </button>
                 </div>
             `;
-        });
+                });
 
-    } catch (err) {
-        console.error(err);
-        document.getElementById("buildList").innerHTML =
-            "<p style='color:red'>Failed to load builds</p>";
-    }
+            } catch (err) {
+                console.error(err);
+                document.getElementById("buildList").innerHTML =
+                    "<p style='color:red'>Failed to load builds</p>";
+            }
 
-    hideLoader();
-}
+            hideLoader();
+        }
 
-window.onload = function () {
-    if (sessionStorage.getItem("auth")) {
-        loadApp();
-    }
-};
-</script>
+        window.onload = function () {
+            if (sessionStorage.getItem("auth")) {
+                loadApp();
+            }
+        };
+    </script>
 
 </body>
+
 </html>
