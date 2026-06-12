@@ -6,7 +6,6 @@
 <title>Evyan Rider Builds</title>
 
 <style>
-/* GLOBAL FIX */
 * {
     box-sizing: border-box;
 }
@@ -18,7 +17,7 @@ body {
     overflow-x: hidden;
 }
 
-/* ================= LOADER ================= */
+/* LOADER */
 .loader-overlay {
     position: fixed;
     top: 0;
@@ -46,7 +45,7 @@ body {
     100% { transform: rotate(360deg); }
 }
 
-/* ================= LOGIN ================= */
+/* LOGIN */
 .login-container {
     height: 100vh;
     display: flex;
@@ -83,7 +82,6 @@ body {
 }
 
 .input-group {
-    text-align: left;
     margin-bottom: 15px;
 }
 
@@ -106,7 +104,7 @@ body {
     cursor: pointer;
 }
 
-/* ================= MAIN ================= */
+/* MAIN */
 .container {
     max-width: 850px;
     width: 100%;
@@ -116,7 +114,6 @@ body {
     border-radius: 14px;
 }
 
-/* HEADER */
 .header {
     display: flex;
     justify-content: space-between;
@@ -145,7 +142,6 @@ body {
     font-size: 13px;
 }
 
-/* CARD */
 .card {
     display: flex;
     justify-content: space-between;
@@ -159,6 +155,7 @@ body {
 .latest {
     color: green;
     font-weight: bold;
+    margin-left: 8px;
 }
 
 .btn {
@@ -169,16 +166,13 @@ body {
     border-radius: 6px;
 }
 
-/* ================= MOBILE SAFE FIX ================= */
+/* MOBILE */
 @media (max-width: 600px) {
-
     body {
         padding: 12px;
     }
 
-    /* SAME STRUCTURE — ONLY SPACING CHANGE */
     .container {
-        max-width: 850px;
         width: calc(100% - 24px);
         margin: 20px auto;
         padding: 20px;
@@ -188,14 +182,6 @@ body {
         width: 100%;
         max-width: 380px;
         padding: 35px 25px;
-    }
-
-    .card {
-        padding: 12px;
-    }
-
-    .btn {
-        padding: 8px 12px;
     }
 }
 </style>
@@ -261,6 +247,7 @@ function hideLoader() {
     document.getElementById("loader").style.display = "none";
 }
 
+/* LOGIN */
 function login() {
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
@@ -271,8 +258,7 @@ function login() {
         setTimeout(() => {
             sessionStorage.setItem("auth", "true");
             loadApp();
-        }, 1000);
-
+        }, 800);
     } else {
         alert("Invalid login");
     }
@@ -289,29 +275,50 @@ function loadApp() {
     renderBuilds();
 }
 
+/* 🚀 GITHUB RELEASES AUTO LIST */
 async function renderBuilds() {
     showLoader();
 
-    const res = await fetch('builds.json');
-    let builds = await res.json();
+    try {
+        const res = await fetch(
+            "https://api.github.com/repos/kpWorkspace2025/evyan_rider_builds/releases"
+        );
 
-    builds.sort((a, b) =>
-        b.version.localeCompare(a.version, undefined, { numeric: true })
-    );
+        const data = await res.json();
 
-    let list = document.getElementById("buildList");
-    list.innerHTML = "";
+        let builds = data
+            .map(r => ({
+                version: r.tag_name,
+                link: r.assets?.[0]?.browser_download_url || ""
+            }))
+            .filter(b => b.link);
 
-    builds.forEach((b, i) => {
-        list.innerHTML += `
-        <div class="card">
-            <div>
-                Version ${b.version}
-                ${i === 0 ? '<span class="latest"> (Latest)</span>' : ''}
-            </div>
-            <a class="btn" href="${b.link}" target="_blank">Download</a>
-        </div>`;
-    });
+        builds.sort((a, b) =>
+            b.version.localeCompare(a.version, undefined, { numeric: true })
+        );
+
+        const list = document.getElementById("buildList");
+        list.innerHTML = "";
+
+        builds.forEach((b, i) => {
+            list.innerHTML += `
+                <div class="card">
+                    <div>
+                        Version ${b.version}
+                        ${i === 0 ? '<span class="latest">(Latest)</span>' : ''}
+                    </div>
+                    <a class="btn" href="${b.link}" target="_blank">
+                        Download
+                    </a>
+                </div>
+            `;
+        });
+
+    } catch (err) {
+        console.error(err);
+        document.getElementById("buildList").innerHTML =
+            "<p style='color:red'>Failed to load builds</p>";
+    }
 
     hideLoader();
 }
@@ -320,7 +327,7 @@ window.onload = function () {
     if (sessionStorage.getItem("auth")) {
         loadApp();
     }
-}
+};
 </script>
 
 </body>
